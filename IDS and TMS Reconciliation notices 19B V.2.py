@@ -12,13 +12,13 @@ import os
 from datetime import datetime
 version = '1_0'
 
-main_dir = r'E:\Personal folder\Coding\pandas output'
+main_dir = r'E:\Python\IDS_TMS Reconciliation\Output'
 os.chdir(main_dir)
 time = datetime.now()
 datestring_for_file = '%04d%02d%02d%02d%02d%02d' % (time.year, time.month, time.day, time.hour,time.minute, time.second)
 
 #import excel database and organize it
-df = pd.read_excel(r'E:\Users\One Acre Fund\Desktop\final database for notices.xlsx')
+df = pd.read_excel(r'E:\Python\IDS_TMS Reconciliation\Data\19B FMs to be Charged.xlsx')
 
 #get a list of districts and make directories per district & get a list of sites
 GetDistrictList = np.unique(df['DistrictFrom'].values)
@@ -49,7 +49,7 @@ for dist in GetDistrictList:
                'should have been distributed',
                'Difference(missing)',
                'Price per unit/Kg',
-               'Total cost']]
+               'Total Cost']]
         
         #save the data frame
         save_name= FM_witanga + uid +'.xlsx'
@@ -72,7 +72,7 @@ for dist in GetDistrictList:
         worksheet.set_column('A:H',9)
         
         #insert an image - TUBURA - in the notice heading
-        worksheet.insert_image('G1', r'E:\Personal folder\Coding\tuburaimages.PNG',{'x_scale': 0.5, 'y_scale': 0.5})
+        worksheet.insert_image('G1', r'E:\IDS_TMS Reconciliation\IDS_TMS Reconciliation\19B IDS_TMS Reconciliation\tuburaimages.PNG',{'x_scale': 0.5, 'y_scale': 0.5})
         
         
         #NOTICE TITLE
@@ -85,7 +85,7 @@ for dist in GetDistrictList:
         
         title_format.set_align('center')
         title_format.set_align('vcenter')
-        worksheet.merge_range('A2:H2','IHUZAMAKURU RYA IDS NA TMS RYA 2019 A\n KUMENYESHA INYONGERAMUSARURO ZABUZE',title_format)
+        worksheet.merge_range('A2:H2','IHUZAMAKURU RYA IDS NA TMS RYA 2019 B\n KUMENYESHA INYONGERAMUSARURO ZABUZE',title_format)
         
         
         # NOTICE COMM
@@ -97,7 +97,7 @@ for dist in GetDistrictList:
         comm_format.set_align('justify')
         
         comm_format.set_align('vcenter')
-        worksheet.merge_range('A3:H3',"Nkuko bigaragazwa n’amakuru ya IDS na TMS wakoresheje mu ifata kandi wasinyeho, biragaragara ko urebwa n’inyongeramusaruro zabuze mu ifata ry’ igihembwe cya 2019 A. Dukurikije amategeko n’amabwiriza ku ibura ry’ inyongeramusaruro kandi wayashyizeho umukono mbere y’ifata rya 2019A, ugomba kwishyura igiciro cy’izo nyongeramusaruro wabuze kugirango hagarurwe amafaranga zari kuzishyurwa iyo zitabura. Icyakora hari amafaranga 10,000 Rwf wababariwe yagabanijwe kuyo ugomba kwishyura yose bityo ayo uzishyura ni make kuyo wagombaga kwishyura. Amafaranga uzishyuzwa azakurwa ku mushahara wawe kandi ntihazarenzwa 20% y’umushahara wawe wa buri kwezi. Kubera iyi mpamvu rero, turakumenyeshako uzishyura aya mafaranga buri kwezi kugeza ashizemo",comm_format)
+        worksheet.merge_range('A3:H3',"Nkuko bigaragazwa n’amakuru ya IDS na TMS wakoresheje mu ifata kandi wasinyeho, biragaragara ko urebwa n’inyongeramusaruro zabuze mu ifata ry’ igihembwe cya 2019 B. Dukurikije amategeko n’amabwiriza ku ibura ry’ inyongeramusaruro kandi wayashyizeho umukono mbere y’ifata rya 2019B, ugomba kwishyura igiciro cy’izo nyongeramusaruro wabuze kugirango hagarurwe amafaranga zari kuzishyurwa iyo zitabura. Icyakora hari amafaranga 7,000 Rwf wababariwe yagabanijwe kuyo ugomba kwishyura yose bityo ayo uzishyura ni make kuyo wagombaga kwishyura. Amafaranga uzishyuzwa azakurwa ku mushahara wawe kandi ntihazarenzwa 20% y’umushahara wawe wa buri kwezi. Kubera iyi mpamvu rero, turakumenyeshako uzishyura aya mafaranga buri kwezi kugeza ashizemo",comm_format)
         
         
         #IDENTITY INFORMATION SECTION
@@ -140,8 +140,8 @@ for dist in GetDistrictList:
         worksheet.write('B8', '1.Ibyapakuruwe\n(TMS)',heading_format)
         worksheet.write('C8', '2.Ibyongeye gupakirwa\n(TMS)',heading_format)
         worksheet.write('D8', '3.Ibyahawe abahinzi\n(IDS)',heading_format)
-        worksheet.write('E8', '4.Ibyagombaga guhabwa abahinzi\n(1-2)',heading_format)
-        worksheet.write('F8', 'Ibibura\n(3-4)',heading_format)
+        worksheet.write('E8', '4.Ibyagombaga guhabwa abahinzi',heading_format)
+        worksheet.write('F8', 'Ibibura',heading_format)
         worksheet.write('G8', 'Agaciro ka kimwe',heading_format)
         worksheet.write('H8', 'Agaciro kose',heading_format)
         
@@ -185,7 +185,7 @@ for dist in GetDistrictList:
         range3 = col5 + ':' + col6
         range4 = col7 + ':' + col8
         worksheet.merge_range(range3,"Agaciro k'inyongera musaruro uzishyura",col3_format)
-        missing_buffer = TotalMissing +'- 10000'
+        missing_buffer = TotalMissing +'- 7000'
         worksheet.merge_range(range4,missing_buffer,col3_format)
         
         #SIGNATURE SECTION
@@ -216,6 +216,19 @@ for dist in GetDistrictList:
         sign_col2 = 'E'+ sign_row
         sign_range = sign_col1 + ':' + sign_col2
         worksheet.merge_range(sign_range,"Umukono w’umukozi: …………………………………………………………",sign_format)
+        
+        agent_row = str(len(mydf['InputName'])+20)
+        agent_col1 = 'A'+ agent_row
+        agent_col2 = 'E'+ agent_row
+        agent_range = agent_col1 + ':' + agent_col2
+        worksheet.merge_range(agent_range,"Umugenzuzi: …………………………………………………………",sign_format)
+       
+        agentsign_row = str(len(mydf['InputName'])+22)
+        agentsign_col1 = 'A'+ agentsign_row
+        agentsign_col2 = 'E'+ agentsign_row
+        agentsign_range = agentsign_col1 + ':' + agentsign_col2
+        worksheet.merge_range(agentsign_range,"Umukono: …………………………………………………………",sign_format)
+        
         writer.save()
         del writer
 #save the workbook
