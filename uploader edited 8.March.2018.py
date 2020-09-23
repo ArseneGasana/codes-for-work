@@ -22,8 +22,8 @@ def file_to_dir():
 
 def get_request():
     import os, json, requests
-    api_token = 'cWSBxMP07hXttQozunV4uvHSvTLUJ9ggd2Q2QJ7q'
-    email = 'zachary.vinyard@oneacrefund.org'
+    api_token = ..........
+    email = .........
     user = email + '/token'
     creds = (user, api_token)
     url = 'https://oneacrefund-rw.zendesk.com/api/v2/'
