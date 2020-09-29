@@ -10,19 +10,19 @@ import os
 from datetime import datetime
 version = '1_0'
 
-main_dir = (r'C:\Users\user\Desktop\Analysis\Access App Uploads')
+main_dir = (r'C:\Users\user\Desktop\Investigation data generation')
 os.chdir(main_dir)
 time = datetime.now()
 datestring_for_file = '%04d%02d%02d%02d%02d%02d' % (time.year, time.month, time.day, time.hour,time.minute, time.second)
 
 
-SCdata = pd.read_excel(r'')
-VRdata = pd.read_excel(r'')
-SCdata.insert(0, 'UID', SCdata['DistrictName']+SCdata['OAFID'].astype('str'))
-VRdata.insert(0, 'UID', VRdata['District']+VRdata['OAFID'].astype('str'))
-ListOfSites = SCdata['SiteName'].unique().tolist()
+SCdata = pd.csv(r'C:\Users\user\Desktop\Investigation data generation\Season Clients Detailed_20200928-093633.csv')
+VRdata = pd.csv(r'C:\Users\user\Desktop\Investigation data generation\Light_20200928-073312.csv')
+SCdata.insert(0, 'UID', SCdata['DistrictName']+'_'+SCdata['OAFID'].astype('str'))
+VRdata.insert(0, 'UID', VRdata['District']+'_'+VRdata['OAFID'].astype('str'))
+ListOfSitesUID = ['Nyamagabe_Nkumbure B','Nyagatare_Mahoro','Gatsibo_Nyabisindu A']
 
-for site in ListOfSites:
+for site in ListOfSitesUID:
     dir_name = '%s-%s-%s' % (site,version, datestring_for_file)
     os.chdir(main_dir)
     os.mkdir(dir_name)
